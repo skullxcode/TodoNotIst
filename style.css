@@ -1,0 +1,1437 @@
+/* ============================================================
+   ToDoNotIst — Modern Productivity Stylesheet
+   Inspired by Todoist · Built with CSS Variables
+
+   Sections:
+     01. Reset & Base
+     02. CSS Variables (Light + Dark)
+     03. Layout
+     04. Navigation (Top Bar)
+     05. Sidebar
+     06. Main Content & Section Headers
+     07. Search Bar
+     08. Add Task Panel
+     09. Task List Containers
+     10. Task Items
+     11. Checkboxes
+     12. Labels System
+     13. Buttons
+     14. Project Selection
+     15. Completed Section
+     16. Priority System
+     17. Empty States
+     18. Animations & Transitions
+     19. Utilities
+     20. Responsive Design
+   ============================================================ */
+
+
+/* ─── 01. Reset & Base ────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background-color: var(--bg-base);
+  height: 100%;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+}
+
+
+/* ─── 02. CSS Variables ───────────────────────────────────── */
+
+/* Light Mode (default) */
+:root {
+  /* Backgrounds */
+  --bg-base:        #f7f8fc;
+  --bg-surface:     #ffffff;
+  --bg-surface-alt: #f0f2f9;
+  --bg-hover:       #f3f4f8;
+
+  /* Borders */
+  --border:         #e6e8ef;
+  --border-strong:  #d1d5de;
+
+  /* Accent Colors */
+  --accent-primary:       #ff4d4f;
+  --accent-primary-hover: #e63e40;
+  --accent-primary-glow:  rgba(255, 77, 79, 0.15);
+  --accent-primary-soft:  rgba(255, 77, 79, 0.08);
+  --accent-secondary:     #5b8cff;
+  --accent-secondary-soft: rgba(91, 140, 255, 0.1);
+
+  /* Text */
+  --text-primary:   #1f2933;
+  --text-secondary: #6b7280;
+  --text-muted:     #9ca3af;
+  --text-inverse:   #ffffff;
+
+  /* Navigation */
+  --nav-bg:         #db4c3f;
+  --nav-bg-alt:     #c0392b;
+
+  /* Sidebar */
+  --sidebar-bg:     #ffffff;
+  --sidebar-active-bg:   #fff0f0;
+  --sidebar-active-text: #db4c3f;
+
+  /* Status */
+  --color-success:      #22c55e;
+  --color-success-soft: #f0fdf4;
+  --color-success-border: #bbf7d0;
+  --color-warning: #f59e0b;
+  --color-danger:  #ef4444;
+
+  /* Priority */
+  --p1-color: #d1453b;
+  --p2-color: #eb8909;
+  --p3-color: #246fe0;
+  --p4-color: var(--text-secondary);
+
+  /* Shadows */
+  --shadow-xs:  0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm:  0 1px 4px rgba(0, 0, 0, 0.07), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md:  0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.05);
+  --shadow-lg:  0 8px 24px rgba(0, 0, 0, 0.10), 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-accent: 0 4px 14px rgba(219, 76, 63, 0.28);
+
+  /* Layout */
+  --nav-height:   54px;
+  --sidebar-width: 256px;
+
+  /* Radius */
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  14px;
+  --radius-xl:  20px;
+  --radius-full: 9999px;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* Transitions */
+  --transition-fast:   all 0.15s ease;
+  --transition-base:   all 0.2s ease;
+  --transition-slow:   all 0.3s ease;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  --bg-base:        #0f172a;
+  --bg-surface:     #1e293b;
+  --bg-surface-alt: #243044;
+  --bg-hover:       #263048;
+
+  --border:         #334155;
+  --border-strong:  #475569;
+
+  --accent-primary:       #ff6b6b;
+  --accent-primary-hover: #ff5252;
+  --accent-primary-glow:  rgba(255, 107, 107, 0.2);
+  --accent-primary-soft:  rgba(255, 107, 107, 0.1);
+  --accent-secondary:     #6c9cff;
+  --accent-secondary-soft: rgba(108, 156, 255, 0.12);
+
+  --text-primary:   #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted:     #64748b;
+  --text-inverse:   #0f172a;
+
+  --nav-bg:         #1a1a2e;
+  --nav-bg-alt:     #16213e;
+
+  --sidebar-bg:     #1a2236;
+  --sidebar-active-bg:   rgba(255, 107, 107, 0.12);
+  --sidebar-active-text: #ff6b6b;
+
+  --color-success:      #4ade80;
+  --color-success-soft: #052e16;
+  --color-success-border: #166534;
+
+  --p1-color: #ff6b6b;
+  --p2-color: #fbbf24;
+  --p3-color: #60a5fa;
+
+  --shadow-xs:  0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-sm:  0 1px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md:  0 4px 12px rgba(0, 0, 0, 0.35), 0 1px 4px rgba(0, 0, 0, 0.25);
+  --shadow-lg:  0 8px 24px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-accent: 0 4px 14px rgba(255, 107, 107, 0.3);
+}
+
+
+/* ─── 03. Layout ──────────────────────────────────────────── */
+
+/* Empty container in HTML — remove from flow */
+#app-container {
+  display: none;
+}
+
+/* Fixed sidebar + offset main */
+main {
+  margin-left: var(--sidebar-width);
+  min-height: calc(100vh - var(--nav-height));
+  padding: var(--space-8) 40px 80px;
+  background: var(--bg-base);
+  transition: var(--transition-slow);
+}
+
+
+/* ─── 04. Navigation (Top Bar) ────────────────────────────── */
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--nav-height);
+  padding: 0 var(--space-5);
+  background: var(--nav-bg);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: background 0.3s ease;
+}
+
+nav h1 {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.96);
+  letter-spacing: -0.3px;
+  user-select: none;
+}
+
+nav h1::after {
+  content: '.';
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* Dark mode toggle button in nav */
+#theme-toggle-btn {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 0.8125rem !important;
+  font-weight: 500 !important;
+  padding: var(--space-1) var(--space-3) !important;
+  border-radius: var(--radius-full) !important;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  backdrop-filter: blur(4px);
+  letter-spacing: 0.01em;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+#theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.22) !important;
+  border-color: rgba(255, 255, 255, 0.36) !important;
+  transform: none !important;
+}
+
+#theme-toggle-btn:active {
+  transform: scale(0.97) !important;
+}
+
+
+/* ─── 05. Sidebar ─────────────────────────────────────────── */
+
+#sidebar {
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  width: var(--sidebar-width);
+  height: calc(100vh - var(--nav-height));
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--space-5) 0 var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  z-index: 200;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+/* Custom scrollbar for sidebar */
+#sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+#sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+#sidebar::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: var(--radius-full);
+}
+
+/* "Add Task" primary button at top of sidebar */
+#sidebar > button:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: calc(100% - var(--space-6));
+  margin: 0 var(--space-3) var(--space-5);
+  padding: 10px var(--space-4);
+  background: var(--accent-primary);
+  color: var(--text-inverse);
+  font-size: 0.875rem;
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  box-shadow: var(--shadow-accent);
+  transition: var(--transition-fast);
+  letter-spacing: 0.01em;
+}
+
+#sidebar > button:first-child::before {
+  content: '+';
+  font-size: 1.2rem;
+  font-weight: 300;
+  line-height: 1;
+}
+
+#sidebar > button:first-child:hover {
+  background: var(--accent-primary-hover);
+  box-shadow: 0 6px 18px var(--accent-primary-glow);
+  transform: translateY(-1px);
+}
+
+#sidebar > button:first-child:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Sidebar section label */
+#sidebar h2 {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-muted);
+  padding: var(--space-4) var(--space-4) var(--space-2);
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+/* Project list */
+#project-list {
+  padding: 0 var(--space-2);
+}
+
+/* Navigation items — all types */
+#project-list li,
+.project-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: 8px var(--space-3);
+  border-radius: var(--radius-md);
+  margin-bottom: 2px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  user-select: none;
+  position: relative;
+}
+
+#project-list li:hover,
+.project-item:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+/* Active / selected nav item */
+#project-list li.active-project,
+.project-item.active-project {
+  background: var(--sidebar-active-bg);
+  color: var(--sidebar-active-text);
+  font-weight: 700;
+}
+
+#project-list li.active-project::before,
+.project-item.active-project::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  background: var(--accent-primary);
+  border-radius: 0 var(--radius-full) var(--radius-full) 0;
+}
+
+/* Delete project button — hidden until hover */
+.delete-project-btn {
+  background: none !important;
+  border: none !important;
+  color: var(--text-muted) !important;
+  font-size: 1rem !important;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 6px !important;
+  border-radius: var(--radius-sm) !important;
+  transition: var(--transition-fast);
+  flex-shrink: 0;
+  opacity: 0;
+  box-shadow: none !important;
+}
+
+.project-item:hover .delete-project-btn {
+  opacity: 1;
+}
+
+.delete-project-btn:hover {
+  color: var(--accent-primary) !important;
+  background: var(--accent-primary-soft) !important;
+}
+
+
+/* ─── 06. Main Content & Section Headers ──────────────────── */
+
+/* Override generic h2 inside main sections */
+main h2 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1.5px solid var(--border);
+  letter-spacing: -0.2px;
+}
+
+/* Sidebar h2 should be compact */
+#sidebar h2 {
+  font-size: 0.6875rem;
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+#current-project-heading {
+  color: var(--text-primary);
+}
+
+
+/* ─── 07. Search Bar ──────────────────────────────────────── */
+
+#search-bar {
+  display: block;
+  width: 100%;
+  max-width: 540px;
+  margin-bottom: var(--space-6);
+  padding: 10px var(--space-4) 10px 40px;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  background-color: var(--bg-surface);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='7' stroke='%236b7280' stroke-width='2'/%3E%3Cpath d='m20 20-3.5-3.5' stroke='%236b7280' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 13px center;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  outline: none;
+  box-shadow: var(--shadow-xs);
+  transition: var(--transition-base);
+}
+
+#search-bar::placeholder {
+  color: var(--text-muted);
+}
+
+#search-bar:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-primary-soft), var(--shadow-sm);
+}
+
+
+/* ─── 08. Add Task Panel ──────────────────────────────────── */
+
+#add-todos-container {
+  display: none; /* JS toggles this */
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-5) var(--space-4);
+  margin-bottom: var(--space-6);
+  box-shadow: var(--shadow-md);
+  animation: panelIn 0.2s ease both;
+}
+
+#add-todos-heading {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1.5px solid var(--border);
+}
+
+/* All inputs inside the panel */
+#add-todos-container input[type="text"],
+#add-todos-container textarea,
+#add-todos-container input[type="date"] {
+  display: block;
+  width: 100%;
+  padding: 9px var(--space-3);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  background: var(--bg-surface-alt);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  outline: none;
+  margin-bottom: var(--space-3);
+  transition: var(--transition-base);
+}
+
+#add-todos-container input[type="text"]:focus,
+#add-todos-container textarea:focus,
+#add-todos-container input[type="date"]:focus {
+  border-color: var(--accent-primary);
+  background: var(--bg-surface);
+  box-shadow: 0 0 0 3px var(--accent-primary-soft);
+}
+
+#add-todos-container input[type="text"]::placeholder,
+#add-todos-container textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* Primary task title input */
+#new-todo-input {
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  background: var(--bg-surface) !important;
+  border-color: var(--border-strong) !important;
+}
+
+/* Description textarea */
+#new-todo-description {
+  min-height: 80px;
+  resize: vertical;
+  line-height: 1.5;
+  font-size: 0.875rem !important;
+}
+
+/* Date input */
+#add-todos-container input[type="date"] {
+  cursor: pointer;
+  color-scheme: light;
+  font-size: 0.875rem;
+}
+
+body.dark-mode #add-todos-container input[type="date"] {
+  color-scheme: dark;
+}
+
+/* Select dropdowns inside panel */
+#add-todos-container select,
+#priority-select,
+#project-select {
+  display: block;
+  width: 100%;
+  padding: 9px var(--space-3);
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  background: var(--bg-surface-alt);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  outline: none;
+  margin-bottom: var(--space-3);
+  cursor: pointer;
+  transition: var(--transition-base);
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+#add-todos-container select:focus,
+#priority-select:focus,
+#project-select:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-primary-soft);
+}
+
+/* Action button row at bottom of panel */
+#add-todos-container > #cancel-edit-button,
+#add-todos-container > #add-todo-button {
+  margin-top: var(--space-2);
+}
+
+/* Inline flex layout for the action buttons */
+#cancel-edit-button,
+#add-todo-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+
+/* ─── 09. Task List Containers ────────────────────────────── */
+
+#todos-in-progress-container,
+#completed-todos-container {
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-5) var(--space-3);
+  margin-bottom: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-slow);
+}
+
+#todos-in-progress-container:hover,
+#completed-todos-container:hover {
+  box-shadow: var(--shadow-md);
+}
+
+#todos-in-progress-list,
+#completed-todos-list {
+  padding: 0;
+}
+
+
+/* ─── 10. Task Items ──────────────────────────────────────── */
+
+#todos-in-progress-list li,
+#completed-todos-list li {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: 10px var(--space-2);
+  border-radius: var(--radius-md);
+  border-bottom: 1px solid var(--border);
+  transition: var(--transition-fast);
+  cursor: default;
+  animation: fadeIn 0.22s ease both;
+  position: relative;
+}
+
+#todos-in-progress-list li:last-child,
+#completed-todos-list li:last-child {
+  border-bottom: none;
+}
+
+#todos-in-progress-list li:hover,
+#completed-todos-list li:hover {
+  background: var(--bg-hover);
+}
+
+/* Task title */
+.todo-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.45;
+  word-break: break-word;
+  padding-top: 1px;
+}
+
+/* Task description */
+.todo-description {
+  display: block;
+  width: 100%;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+  line-height: 1.45;
+}
+
+/* Completed strikethrough style */
+.completed-todo-text {
+  text-decoration: line-through;
+  color: var(--text-muted) !important;
+  font-weight: 400;
+}
+
+/* Due date badge */
+.todo-date {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border);
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 2px;
+  align-self: flex-start;
+}
+
+/* Labels row */
+.todo-labels-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  width: 100%;
+  margin-top: var(--space-1);
+}
+
+/* Individual label badge */
+.label-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent-secondary);
+  background: var(--accent-secondary-soft);
+  border: 1px solid rgba(91, 140, 255, 0.2);
+  padding: 2px 9px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.01em;
+}
+
+body.dark-mode .label-badge {
+  border-color: rgba(108, 156, 255, 0.25);
+}
+
+/* Edit / Delete inline action buttons — hidden until hover */
+.edit-todo-btn,
+.delete-todo-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  padding: 3px 8px;
+  font-size: 0.8125rem;
+  font-family: inherit;
+  transition: var(--transition-fast);
+  flex-shrink: 0;
+  opacity: 0;
+  color: var(--text-secondary);
+  align-self: flex-start;
+  margin-top: 1px;
+  box-shadow: none;
+}
+
+#todos-in-progress-list li:hover .edit-todo-btn,
+#todos-in-progress-list li:hover .delete-todo-btn,
+#completed-todos-list li:hover .edit-todo-btn,
+#completed-todos-list li:hover .delete-todo-btn {
+  opacity: 1;
+}
+
+.edit-todo-btn:hover {
+  background: var(--bg-surface-alt);
+  color: var(--text-primary);
+  transform: none;
+}
+
+.delete-todo-btn:hover {
+  background: var(--accent-primary-soft);
+  color: var(--accent-primary);
+  transform: none;
+}
+
+.edit-todo-btn:active,
+.delete-todo-btn:active {
+  transform: scale(0.94);
+}
+
+
+/* ─── 11. Checkboxes ──────────────────────────────────────── */
+
+.todo-checkbox {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  accent-color: var(--accent-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 3px;
+  transition: var(--transition-fast);
+}
+
+.label-checkbox {
+  width: 14px !important;
+  height: 14px !important;
+  accent-color: var(--accent-primary);
+  cursor: pointer;
+  margin: 0 !important;
+  padding: 0 !important;
+  flex-shrink: 0;
+}
+
+
+/* ─── 12. Labels System ───────────────────────────────────── */
+
+/* "Add/Manage Labels" toggle button */
+#toggle-labels-btn {
+  display: inline-flex !important;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--bg-surface-alt) !important;
+  color: var(--text-secondary) !important;
+  border: 1.5px solid var(--border) !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 6px var(--space-3) !important;
+  font-size: 0.8125rem !important;
+  font-weight: 500 !important;
+  cursor: pointer;
+  margin-bottom: var(--space-3);
+  transition: var(--transition-fast);
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+#toggle-labels-btn:hover {
+  background: var(--accent-primary-soft) !important;
+  color: var(--accent-primary) !important;
+  border-color: var(--accent-primary-glow) !important;
+  transform: none !important;
+}
+
+/* Labels box */
+#labels-box {
+  background: var(--bg-surface-alt);
+  border: 1.5px dashed var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-3) var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+#labels-box > input[type="text"] {
+  margin-bottom: var(--space-2);
+  font-size: 0.875rem !important;
+}
+
+/* Labels list inside the box */
+#labels-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+  padding: 0;
+}
+
+#labels-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-full);
+  padding: 4px 10px 4px var(--space-2);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: var(--transition-fast);
+  cursor: default;
+}
+
+#labels-list li:hover {
+  background: var(--accent-primary-soft);
+  border-color: var(--accent-primary-glow);
+}
+
+/* Delete label × button */
+.delete-label-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s ease;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.delete-label-btn:hover {
+  color: var(--accent-primary);
+  background: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* "Add Label" button inside labels box */
+#labels-box > button {
+  background: var(--bg-surface) !important;
+  color: var(--text-secondary) !important;
+  border: 1.5px solid var(--border) !important;
+  font-size: 0.8rem !important;
+  padding: 5px var(--space-3) !important;
+  border-radius: var(--radius-sm) !important;
+  box-shadow: none !important;
+}
+
+#labels-box > button:hover {
+  background: var(--accent-primary-soft) !important;
+  color: var(--accent-primary) !important;
+  border-color: var(--accent-primary-glow) !important;
+}
+
+
+/* ─── 13. Buttons ─────────────────────────────────────────── */
+
+/* Global button base */
+button {
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:active {
+  transform: translateY(1px) scale(0.97);
+}
+
+/* ── Primary Action: Add / Update Todo ── */
+#add-todo-button {
+  background: var(--accent-primary);
+  color: var(--text-inverse);
+  padding: 9px var(--space-5);
+  font-size: 0.9375rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 8px var(--accent-primary-glow);
+}
+
+#add-todo-button:hover {
+  background: var(--accent-primary-hover);
+  box-shadow: 0 4px 16px var(--accent-primary-glow);
+  transform: translateY(-1px);
+}
+
+/* ── Secondary: Cancel ── */
+#cancel-edit-button {
+  background: var(--bg-surface-alt);
+  color: var(--text-secondary);
+  border: 1.5px solid var(--border);
+  padding: 8px var(--space-4);
+}
+
+#cancel-edit-button:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+/* ── "Add Todos +" in task containers ── */
+#todos-in-progress-container > button,
+#completed-todos-container > button {
+  background: transparent !important;
+  color: var(--text-secondary) !important;
+  border: 1.5px dashed var(--border) !important;
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  padding: 6px var(--space-4) !important;
+  margin-bottom: var(--space-4);
+  border-radius: var(--radius-md) !important;
+  box-shadow: none !important;
+  width: 100%;
+  justify-content: center;
+}
+
+#todos-in-progress-container > button:hover,
+#completed-todos-container > button:hover {
+  background: var(--accent-primary-soft) !important;
+  color: var(--accent-primary) !important;
+  border-color: var(--accent-primary) !important;
+  border-style: solid !important;
+}
+
+/* ── Clear Completed ── */
+#clear-completed-btn {
+  background: transparent !important;
+  color: var(--accent-primary) !important;
+  border: 1px solid var(--accent-primary) !important;
+  padding: 5px var(--space-3) !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  border-radius: var(--radius-sm) !important;
+  margin-bottom: var(--space-3);
+  opacity: 0.8;
+  box-shadow: none !important;
+}
+
+#clear-completed-btn:hover {
+  background: var(--accent-primary-soft) !important;
+  opacity: 1;
+}
+
+
+/* ─── 14. Project Selection Box ───────────────────────────── */
+
+#project-selection-box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  padding: var(--space-3);
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+#project-selection-box label {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+#project-select {
+  flex: 1;
+  min-width: 120px;
+  margin-bottom: 0 !important;
+}
+
+/* "+ New Project" inline text button */
+#show-project-input-btn {
+  background: none !important;
+  border: none !important;
+  color: var(--accent-secondary) !important;
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  padding: 4px var(--space-2) !important;
+  border-radius: var(--radius-sm) !important;
+  box-shadow: none !important;
+  transition: var(--transition-fast);
+}
+
+#show-project-input-btn:hover {
+  background: var(--accent-secondary-soft) !important;
+  transform: none !important;
+}
+
+/* New project input row */
+#new-project-box {
+  display: none;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border);
+}
+
+#new-project-input {
+  flex: 1;
+  min-width: 160px;
+  padding: 7px var(--space-3) !important;
+  font-size: 0.875rem !important;
+  background: var(--bg-surface) !important;
+  border: 1.5px solid var(--border) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--text-primary) !important;
+  margin-bottom: 0 !important;
+}
+
+#new-project-input:focus {
+  border-color: var(--accent-primary) !important;
+  box-shadow: 0 0 0 3px var(--accent-primary-soft) !important;
+}
+
+/* New project Add button */
+#new-project-box button:first-of-type {
+  background: var(--accent-primary) !important;
+  color: var(--text-inverse) !important;
+  font-size: 0.8125rem !important;
+  padding: 6px var(--space-3) !important;
+  border-radius: var(--radius-sm) !important;
+  box-shadow: 0 2px 6px var(--accent-primary-glow) !important;
+}
+
+#new-project-box button:first-of-type:hover {
+  background: var(--accent-primary-hover) !important;
+}
+
+/* New project Cancel button */
+#new-project-box button:last-of-type {
+  background: var(--bg-surface-alt) !important;
+  color: var(--text-secondary) !important;
+  border: 1.5px solid var(--border) !important;
+  font-size: 0.8125rem !important;
+  padding: 6px var(--space-3) !important;
+  border-radius: var(--radius-sm) !important;
+  box-shadow: none !important;
+}
+
+#new-project-box button:last-of-type:hover {
+  background: var(--bg-hover) !important;
+  color: var(--text-primary) !important;
+}
+
+
+/* ─── 15. Completed Section ───────────────────────────────── */
+
+#completed-todos-container {
+  border-color: var(--color-success-border);
+}
+
+body.dark-mode #completed-todos-container {
+  border-color: var(--color-success-border);
+}
+
+#completed-todos-container h2 {
+  color: var(--color-success);
+  border-bottom-color: var(--color-success-border);
+}
+
+#completed-todos-list li {
+  background: var(--color-success-soft);
+  border-bottom-color: rgba(34, 197, 94, 0.1);
+}
+
+#completed-todos-list li:hover {
+  background: color-mix(in srgb, var(--color-success-soft) 70%, var(--bg-surface-alt));
+}
+
+
+/* ─── 16. Priority System ─────────────────────────────────── */
+
+.p1-text {
+  color: var(--p1-color) !important;
+  font-weight: 600;
+}
+
+.p2-text {
+  color: var(--p2-color) !important;
+  font-weight: 500;
+}
+
+.p3-text {
+  color: var(--p3-color) !important;
+  font-weight: 500;
+}
+
+/* Priority option styling in select */
+#priority-select option.p1 { color: #d1453b; }
+#priority-select option.p2 { color: #eb8909; }
+#priority-select option.p3 { color: #246fe0; }
+
+/* Overdue date styling */
+.overdue-text {
+  color: var(--accent-primary) !important;
+  background: var(--accent-primary-soft) !important;
+  border-color: var(--accent-primary-glow) !important;
+  font-weight: 600;
+}
+
+
+/* ─── 17. Empty States ────────────────────────────────────── */
+
+#todos-in-progress-list:empty::after,
+#completed-todos-list:empty::after {
+  content: 'Nothing here yet.';
+  display: block;
+  text-align: center;
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 0.875rem;
+  padding: 28px 0 16px;
+}
+
+
+/* ─── 18. Animations & Transitions ───────────────────────── */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes panelIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+/* ─── 19. Utilities ───────────────────────────────────────── */
+
+/* Visually hidden (accessibility) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Focus ring for keyboard accessibility */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Muted text */
+.text-muted {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+/* Small divider */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: var(--space-4) 0;
+}
+
+
+/* ─── 20. Responsive Design ───────────────────────────────── */
+
+/* Tablet (≤ 900px) */
+@media (max-width: 900px) {
+  :root {
+    --sidebar-width: 220px;
+  }
+
+  main {
+    padding: var(--space-6) var(--space-6) 64px;
+  }
+
+  #add-todos-container {
+    padding: var(--space-4);
+  }
+}
+
+/* Mobile (≤ 640px) */
+@media (max-width: 640px) {
+  :root {
+    --sidebar-width: 0px;
+  }
+
+  #sidebar {
+    position: relative;
+    top: 0;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: var(--space-2) 0;
+    flex-direction: row;
+    align-items: center;
+    overflow-x: auto;
+    overflow-y: visible;
+    gap: 0;
+  }
+
+  #sidebar::-webkit-scrollbar {
+    height: 0;
+  }
+
+  #sidebar > button:first-child {
+    width: auto;
+    flex-shrink: 0;
+    margin: 0 var(--space-2) 0 var(--space-3);
+    padding: 7px var(--space-3);
+    font-size: 0.8125rem;
+  }
+
+  #sidebar h2 {
+    display: none;
+  }
+
+  #project-list {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-1);
+    padding: 0 var(--space-2);
+    white-space: nowrap;
+  }
+
+  #project-list li,
+  .project-item {
+    margin: 0;
+    flex-shrink: 0;
+    font-size: 0.8125rem;
+    padding: 5px var(--space-3);
+    border-radius: var(--radius-full);
+  }
+
+  /* Active indicator — horizontal, no left accent bar */
+  #project-list li.active-project::before,
+  .project-item.active-project::before {
+    display: none;
+  }
+
+  main {
+    margin-left: 0;
+    padding: var(--space-4) var(--space-3) 64px;
+    min-height: auto;
+  }
+
+  #search-bar {
+    max-width: 100%;
+  }
+
+  #add-todos-container {
+    padding: var(--space-4) var(--space-3) var(--space-3);
+  }
+
+  main h2 {
+    font-size: 1rem;
+  }
+
+  /* Hide edit button on touch devices */
+  .edit-todo-btn {
+    display: none;
+  }
+
+  /* Always show delete on mobile */
+  .delete-todo-btn {
+    opacity: 0.6 !important;
+  }
+
+  #todos-in-progress-list li,
+  #completed-todos-list li {
+    padding: var(--space-2) var(--space-1);
+    gap: var(--space-2);
+  }
+
+  #todos-in-progress-container,
+  #completed-todos-container {
+    padding: var(--space-3) var(--space-3) var(--space-2);
+    border-radius: var(--radius-md);
+  }
+
+  #todos-in-progress-container > button,
+  #completed-todos-container > button {
+    font-size: 0.8125rem !important;
+  }
+
+  #new-project-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #new-project-input {
+    min-width: 100% !important;
+  }
+}
+
+/* Very small screens (≤ 380px) */
+@media (max-width: 380px) {
+  nav h1 {
+    font-size: 1rem;
+  }
+
+  #add-todo-button {
+    padding: 8px var(--space-4);
+    font-size: 0.875rem;
+  }
+
+  #cancel-edit-button {
+    padding: 7px var(--space-3);
+    font-size: 0.8125rem;
+  }
+
+  .todo-title {
+    font-size: 0.875rem;
+  }
+}
+
+/* Drag and Drop Styles */
+.draggable-item {
+    cursor: grab;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.draggable-item:active {
+    cursor: grabbing;
+}
+
+/* This is the class applied to the item while you are holding it */
+.dragging {
+    opacity: 0.5;
+    background-color: #f0f8ff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transform: scale(1.02);
+}
+
+body.dark-mode .dragging {
+    background-color: #3a3a3a;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.8);
+}

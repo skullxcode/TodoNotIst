@@ -1,0 +1,25 @@
+todos
+[
+    {
+        id: unique id,
+        title: ,
+        description,
+        completed: boolean
+    }
+]
+
+tags
+[
+    {
+        id: unique id,
+        title: 
+    }
+]
+
+todos_tags
+[
+    {
+        tag_id: 
+        todo_id
+    }
+]

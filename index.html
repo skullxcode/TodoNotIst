@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav style="display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
+        <h1>ToDoNotIst</h1>
+        
+        <button id="theme-toggle-btn" onclick="toggleTheme()" style="background: transparent; border: 1px solid #ccc; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+            🌙 Dark Mode
+        </button>
+    </nav>
+    <div id="app-container"></div>
+        <aside id="sidebar">
+            <button onclick="toggleAddTodoSection()">Add Task</button>
+            <h2>Projects</h2>
+            <ul id="project-list" style="list-style-type: none; padding: 0;">
+                </ul>
+        </aside>
+
+        <main>
+            <input type="text" name="" id="search-bar" placeholder="Search">
+            <div id="add-todos-container">
+                <h2 id="add-todos-heading">Add Todos</h2>
+                <div id="project-selection-box" style="margin-top: 15px; margin-bottom: 15px;">
+                    <label for="project-select" style="font-size: 14px; color: gray;">Project:</label>
+                    <select id="project-select" style="padding: 5px; border-radius: 4px;"></select>
+                    
+                    <button id="show-project-input-btn" type="button" onclick="toggleNewProjectBox()" style="background: none; border: none; color: blue; cursor: pointer;">+ New Project</button>
+                    
+                    <div id="new-project-box" style="display: none; margin-top: 10px; gap: 5px;">
+                        <input type="text" id="new-project-input" placeholder="Project name..." style="padding: 5px;">
+                        <button type="button" onclick="createNewProject()" style="padding: 5px; cursor: pointer;">Add</button>
+                        <button type="button" onclick="toggleNewProjectBox()" style="padding: 5px; cursor: pointer; background: #eee; border: 1px solid #ccc;">Cancel</button>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                    <input type="text" id="new-todo-input" placeholder="Task name (e.g., Buy milk)" required style="flex-grow: 1; padding: 8px; font-weight: bold; border: 1px solid #ccc; border-radius: 4px;">
+                    
+                    <button type="button" onclick="categorizeWithN8n()" style="background: #6a5acd; color: white; border: none; border-radius: 4px; padding: 0 15px; cursor: pointer; font-weight: bold;">
+                        ✨ Auto-Fill
+                    </button>
+                </div>
+                <textarea id="new-todo-description" placeholder="Description"></textarea>
+                <input type="date" id="date-input" required>
+                <select id="priority-select" style="padding: 5px; border-radius: 4px; margin-top: 10px;">
+                    <option value="p4" selected>Priority 4 (Default)</option>
+                    <option value="p3" class="p3">Priority 3 (Blue)</option>
+                    <option value="p2" class="p2">Priority 2 (Orange)</option>
+                    <option value="p1" class="p1">Priority 1 (Red)</option>
+                </select>
+                <button type="button" onclick="toggleLabelSection()" id="toggle-labels-btn">+ Add/Manage Labels</button>
+                <div id="labels-box">
+                    <input type="text" id="new-label-input" placeholder="Add new label.">
+                    <button onclick="addLabels()">Add Label</button>
+                    <ul id="labels-list" style="list-style-type: none;">
+                    </ul>
+                </div>
+                <button onclick="cancelEdit()" id="cancel-edit-button">Cancel</button>
+                <button onclick="addTodo()" id="add-todo-button">Add Todo</button>
+
+            </div>
+            <div id="todos-in-progress-container">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2 id="current-project-heading">All Tasks</h2>
+                    
+                    <select id="sort-select" onchange="changeSortMode()" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+                        <option value="manual">↕️ Manual Order</option>
+                        <option value="priority">🚩 By Priority</option>
+                        <option value="date">📅 By Due Date</option>
+                        <option value="alpha">🔤 Alphabetical</option>
+                    </select>
+                </div>
+                
+                <button onclick="toggleAddTodoSection()" style="margin-top: 10px;">Add Todos +</button>
+                <ul style="list-style-type: none;" id="todos-in-progress-list">
+                </ul>
+            </div>
+            <div id="completed-todos-container">
+                <h2>Completed Todos</h2>
+                
+                <button onclick="clearCompleted()" id="clear-completed-btn" style="margin-bottom: 10px; cursor: pointer; color: red; border: 1px solid red; padding: 5px 10px; background: transparent; border-radius: 4px; font-size: 12px;">
+                    Clear All Completed
+                </button>
+                
+                <ul style="list-style-type: none;" id="completed-todos-list">
+                </ul>
+            </div>
+        </main>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
+<script src="script.js"></script>
+
+</html>
