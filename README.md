@@ -8,7 +8,7 @@
 
 > 🚧 **Demo coming soon** — deployment in progress.
 >
-> [![Live Demo](https://img.shields.io/badge/Live%20Demo-Coming%20Soon-orange?style=for-the-badge&logo=vercel)](https://github.com)
+> [![Live Demo](skullxcode.github.io/TodoNotIst/)
 > [![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github)](https://github.com)
 
 ---
