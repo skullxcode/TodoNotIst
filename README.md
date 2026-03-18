@@ -1,180 +1,102 @@
-# ✅ TodoNotIst — Smart Todo App with n8n Automation
+# 📝 TodoNotIst
 
-> A Todoist-inspired task management web application that integrates **n8n workflow automation** to intelligently enhance your tasks — automatically filling descriptions, assigning smart labels, and enriching metadata the moment you create a task.
+> A Todoist-inspired todo app — but with a twist. Powered by vanilla JS and a sprinkle of AI magic via n8n automation.
+
+---
+
+## 🚀 About the Project
+
+I built TodoNotIst because I wanted a clean, no-nonsense task manager that I actually *understood* end-to-end — no bloated frameworks, no black boxes, just HTML, CSS, and JavaScript doing their thing.
+
+But the part I'm most proud of? The **✨ Auto-Fill** button. Type a task name, hit it, and an n8n workflow fires off in the background — hitting an AI model that figures out the priority, writes a description, picks the right project, and slaps on relevant labels. All in a couple of seconds. It feels like magic, and honestly it kind of is.
+
+This was my playground for learning how frontend apps talk to automation backends. Turns out they talk pretty well.
 
 ---
 
 ## 🌐 Live Demo
 
-> 🚧 **Demo coming soon** — deployment in progress.
->
-> [![Live Demo](skullxcode.github.io/TodoNotIst/)
-> [![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github)](https://github.com)
+👉 **[skullxcode.github.io/TodoNotIst](https://skullxcode.github.io/TodoNotIst/)**
 
----
-
-## 📸 Demo Preview
-
-<!-- Add screenshots or a GIF here -->
-
-| Task Dashboard | Add Task Modal | Automation in Action |
-|:-:|:-:|:-:|
-| ![Dashboard Placeholder](https://via.placeholder.com/280x180?text=Dashboard) | ![Modal Placeholder](https://via.placeholder.com/280x180?text=Add+Task) | ![Automation Placeholder](https://via.placeholder.com/280x180?text=n8n+Workflow) |
-
-> 💡 *Replace the placeholders above with actual screenshots or a demo GIF once available.*
-
----
-
-## 📋 Overview
-
-**TaskFlow** is a full-featured, browser-based task management application inspired by [Todoist](https://todoist.com). It is built with vanilla **HTML, CSS, and JavaScript** and supercharged with **n8n** — an open-source workflow automation platform.
-
-What sets TaskFlow apart is its **automation-first approach to task creation**. When a user adds a new task, an n8n workflow is triggered behind the scenes to:
-
-- 🤖 **Auto-fill** a smart task description
-- 🏷️ **Assign relevant labels** based on the task title
-- 📦 **Enrich metadata** such as priority, category, and estimated effort
-
-This project was built to demonstrate practical integration between frontend web development and no-code/low-code automation tooling — a skill increasingly valued in modern development teams.
+> ⚠️ The ✨ Auto-Fill feature requires a running n8n instance with the included workflow. See setup below.
 
 ---
 
 ## ✨ Features
 
-### 🗂️ Core Task Management
+**Core Task Management**
 - ➕ Create, edit, and delete tasks
-- ✅ Mark tasks as complete / incomplete
-- 📁 Organize tasks into projects or categories
-- 🔍 Search and filter tasks by label or status
-- 📅 Set due dates with visual indicators
+- ✅ Toggle tasks between in-progress and completed
+- 📁 Organize tasks into custom **projects**
+- 🏷️ Create and assign **labels** to tasks
+- 📋 Add **subtasks** to break work down further
+- 📅 Set due dates with smart display — "Today", "Tomorrow", "Overdue"
+- 🔍 Real-time **search** across all tasks
+- 🔃 **Sort** tasks by priority, due date, alphabetical order, or drag-and-drop manually
+- 🗑️ Bulk-clear completed tasks
+- ⏰ Due date reminders (browser alert, 24h before)
 
-### ⚡ n8n Automation Integration
-- 🤖 Auto-generated task descriptions on creation
-- 🏷️ Smart label assignment based on task keywords
-- 📊 Automatic metadata enrichment (priority, category, effort estimate)
-- 🔔 Webhook-based real-time communication between the app and n8n
+**AI-Powered via n8n**
+- ✨ **Auto-Fill button** — type a task name and let AI fill in the description, priority, project, and labels automatically
+- 🤖 Powered by a Groq-hosted LLM (GPT-class model) via n8n's LangChain node
+- 📦 AI also suggests subtasks to help you break down bigger tasks
+- 🔔 Toast notifications for auto-fill success/failure feedback
 
-### 🎨 UI/UX
-- 🌗 Clean, minimal Todoist-inspired interface
-- 📱 Responsive design for mobile and desktop
-- 🔄 Loading indicators during automation processing
-- 💬 Toast notifications for task creation and automation status
-
----
-
-## ⚙️ How the Automation Works
-
-TaskFlow uses **n8n webhooks** to connect the frontend to a workflow automation backend.
-
-### 🔁 Workflow Overview
-
-```
-User Creates Task
-       │
-       ▼
-[Frontend sends POST request to n8n Webhook]
-       │
-       ▼
-[n8n Workflow Triggered]
-       │
-       ├──► Analyze task title (keyword extraction)
-       │
-       ├──► Generate smart description (via AI node or template logic)
-       │
-       ├──► Assign labels (e.g., "work", "urgent", "research")
-       │
-       └──► Enrich metadata (priority level, category, time estimate)
-              │
-              ▼
-[n8n sends enriched task data back to frontend via webhook response]
-       │
-       ▼
-[Frontend updates the task card with enriched data]
-```
-
-### 🛠️ n8n Nodes Used
-
-| Node | Purpose |
-|------|---------|
-| **Webhook** | Receives task data from the frontend |
-| **Function / Code Node** | Parses task title, extracts keywords |
-| **IF / Switch Node** | Routes task to correct label/category logic |
-| **Set Node** | Builds enriched task payload |
-| **Respond to Webhook** | Returns enriched data back to the frontend |
-| *(Optional)* **OpenAI Node** | Generates natural language task descriptions |
-
-> 💡 You can extend the workflow with additional nodes — for example, saving tasks to **Google Sheets**, sending **Slack notifications**, or syncing with a **Notion database**.
+**UI/UX**
+- 🌗 Dark mode / light mode toggle (persisted across sessions)
+- 📱 Responsive layout — works on mobile and desktop
+- ⌨️ Keyboard shortcuts: `N` to add a task, `/` or `Ctrl+K` to focus search, `Esc` to cancel
+- 💾 All data saved in **localStorage** — no backend needed
+- ✨ Visual flash feedback when auto-fill populates a field
 
 ---
 
-## 🧰 Tech Stack
+## 🛠️ Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| **Frontend** | HTML5, CSS3, Vanilla JavaScript (ES6+) |
-| **Automation** | [n8n](https://n8n.io) (self-hosted or cloud) |
-| **Communication** | REST API / Webhooks (HTTP POST/GET) |
-| **Styling** | Custom CSS with CSS Variables |
-| **Icons** | [Font Awesome](https://fontawesome.com) or SVG icons |
-| **Deployment** | GitHub Pages / Vercel / Netlify *(frontend)* |
-
----
-
-## 🗂️ Project Structure
-
-```
-taskflow/
-│
-├── index.html              # Main HTML file — app shell
-├── style.css               # Global styles and themes
-├── app.js                  # Core JavaScript logic (tasks, UI, events)
-├── automation.js           # Handles webhook calls to n8n
-│
-├── assets/
-│   ├── icons/              # SVG or PNG icons
-│   └── screenshots/        # App screenshots for README/docs
-│
-├── n8n-workflow/
-│   └── taskflow-workflow.json   # Exported n8n workflow (importable)
-│
-├── .env.example            # Example environment variables template
-├── README.md               # Project documentation (you are here!)
-└── LICENSE                 # MIT License
-```
+| | |
+|---|---|
+| **HTML5** | App structure and markup |
+| **CSS3** | Custom styles with CSS variables, dark mode support |
+| **Vanilla JavaScript (ES6+)** | All logic — state, rendering, events, drag-and-drop |
+| **n8n** | Workflow automation — receives task data via webhook, runs AI enrichment, returns structured JSON |
+| **Groq / LLM** | The AI model behind Auto-Fill, connected via n8n's LangChain node |
+| **localStorage** | Client-side persistence, no backend required |
 
 ---
 
-## 🚀 Installation Guide
+## 📦 Installation
 
-### ✅ Prerequisites
-
-Before you begin, make sure you have the following:
-
-- A modern web browser (Chrome, Firefox, Edge)
-- [n8n](https://docs.n8n.io/getting-started/installation/) installed locally **or** an [n8n Cloud](https://app.n8n.cloud) account
-- *(Optional)* [Node.js](https://nodejs.org/) if running n8n via npm
-- *(Optional)* [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) VS Code extension for local development
-
----
-
-### 📥 Step 1 — Clone the Repository
+### 1. Clone the repo
 
 ```bash
-git clone https://github.com/your-username/taskflow.git
-cd taskflow
+git clone https://github.com/skullxcode/TodoNotIst.git
+cd TodoNotIst
 ```
+
+### 2. Open the app
+
+Just open `index.html` in your browser — no build step needed.
+
+```bash
+# Or use VS Code Live Server for hot-reload:
+# Right-click index.html → "Open with Live Server"
+```
+
+That's it for the basic app. Tasks will save to your browser's localStorage automatically.
 
 ---
 
-### 🔧 Step 2 — Set Up n8n
+### 3. Set up n8n (for Auto-Fill)
 
-#### Option A: n8n via npm (local)
+The ✨ Auto-Fill feature needs a running n8n instance with the included workflow.
+
+#### Option A — n8n via npm
 ```bash
-npm install n8n -g
+npm install -g n8n
 n8n start
 ```
 
-#### Option B: n8n via Docker
+#### Option B — n8n via Docker
 ```bash
 docker run -it --rm \
   --name n8n \
@@ -183,201 +105,68 @@ docker run -it --rm \
   n8nio/n8n
 ```
 
-> 🌐 n8n will be accessible at: `http://localhost:5678`
+> n8n will be at: `http://localhost:5678`
 
----
+### 4. Import the workflow
 
-### 📤 Step 3 — Import the Workflow
-
-1. Open your n8n dashboard at `http://localhost:5678`
+1. Open your n8n dashboard
 2. Go to **Workflows → Import from File**
-3. Select the file: `n8n-workflow/taskflow-workflow.json`
-4. Click **Activate** to enable the workflow
-5. Copy the **Webhook URL** displayed in the Webhook node
+3. Select `n8n.json` from this repo
+4. Add your **Groq API credentials** to the `Groq Chat Model` node
+5. Click **Activate**
+6. Copy the **Webhook URL** from the `Webhook (POST)` node
 
----
+### 5. Point the app at your webhook
 
-### 🔑 Step 4 — Configure Environment Variables
-
-Create a `.env` file (or edit `automation.js` directly for simplicity):
-
-```bash
-cp .env.example .env
-```
-
-Edit `.env`:
-
-```env
-N8N_WEBHOOK_URL=http://localhost:5678/webhook/taskflow
-```
-
-Or directly in `automation.js`:
+Open `script.js` and update this line near the bottom:
 
 ```javascript
-const N8N_WEBHOOK_URL = "http://localhost:5678/webhook/taskflow";
+const N8N_WEBHOOK_URL = "YOUR_WEBHOOK_URL_HERE";
 ```
 
----
-
-## ▶️ How to Run Locally
-
-1. **Start n8n** (if not already running):
-   ```bash
-   n8n start
-   ```
-
-2. **Open the frontend:**
-   - Option A: Open `index.html` directly in your browser
-   - Option B: Use VS Code Live Server for hot-reload:
-     ```
-     Right-click index.html → "Open with Live Server"
-     ```
-
-3. Visit `http://127.0.0.1:5500` (Live Server default) or just open `index.html`
+Now hit ✨ Auto-Fill after typing a task name and watch it go.
 
 ---
 
-## 📖 Usage Instructions
+## 📸 Screenshots
 
-### Adding a Task
-1. Click the **"+ Add Task"** button
-2. Enter a task title (e.g., `Research competitor pricing`)
-3. *(Optional)* Set a due date
-4. Click **"Create Task"**
+| | |
+|---|---|
+| ![Home](./screenshots/home.png) | Main dashboard — task list, sidebar projects, sort controls |
+| ![Add Task](./screenshots/add-task.png) | Add task form with Auto-Fill button |
+| ![Dark Mode](./screenshots/dark-mode.png) | Dark mode (because of course) |
+| ![n8n Workflow](./screenshots/n8n-workflow.png) | The n8n workflow behind Auto-Fill |
 
-### Watching the Automation
-After you click "Create Task":
-- A loading indicator appears on the new task card
-- The app sends the task to your **n8n webhook** in the background
-- n8n processes and returns enriched data
-- The task card automatically updates with:
-  - 📝 A generated description
-  - 🏷️ Smart labels (e.g., `research`, `business`, `medium-priority`)
-  - 📊 Enriched metadata
-
-### Managing Tasks
-- **Complete a task:** Click the circle checkbox
-- **Edit a task:** Click the pencil icon
-- **Delete a task:** Click the trash icon
-- **Filter tasks:** Use the sidebar to filter by label, project, or status
+> 💡 *Screenshots coming soon — feel free to contribute some!*
 
 ---
 
-## 💡 Example Workflow — Creating a Task
+## 🤔 Why I Built This
 
-**Input (from frontend):**
-```json
-{
-  "title": "Research competitor pricing models",
-  "due_date": "2025-07-15",
-  "created_at": "2025-07-10T09:30:00Z"
-}
-```
+Mostly because I wanted to learn how a "normal" frontend app could talk to an automation tool like n8n — and how far you can get with just vanilla JS before needing a framework.
 
-**n8n Processing:**
-- Keyword detection: `research`, `competitor`, `pricing`
-- Category match: `Business`
-- Priority assignment: `Medium`
-- Description generation: *"Analyze and document pricing strategies used by top competitors in the market to identify gaps and opportunities."*
-
-**Output (back to frontend):**
-```json
-{
-  "title": "Research competitor pricing models",
-  "description": "Analyze and document pricing strategies used by top competitors in the market to identify gaps and opportunities.",
-  "labels": ["research", "business", "medium-priority"],
-  "category": "Business",
-  "priority": "medium",
-  "estimated_effort": "2 hours",
-  "due_date": "2025-07-15"
-}
-```
-
----
-
-## 📷 Screenshots
-
-> *(Replace with actual screenshots)*
-
-### 🏠 Task Dashboard
-![Dashboard Screenshot](https://via.placeholder.com/800x450?text=Task+Dashboard+Screenshot)
-
-### ➕ Add Task Modal
-![Add Task](https://via.placeholder.com/800x450?text=Add+Task+Modal+Screenshot)
-
-### 🤖 Automation in Action (n8n Workflow)
-![n8n Workflow](https://via.placeholder.com/800x450?text=n8n+Workflow+Screenshot)
-
-### 🏷️ Enriched Task Card
-![Enriched Task](https://via.placeholder.com/800x450?text=Enriched+Task+Card+Screenshot)
+The n8n integration was the fun experiment. Instead of hardcoding categorization logic, I just... asked an LLM. Type "prepare Q3 investor report", get back `priority: p1`, `labels: ["work", "finance"]`, and a two-sentence description. It's silly and practical at the same time, which is kind of the sweet spot.
 
 ---
 
 ## 🔮 Future Improvements
 
-- [ ] 🔐 User authentication (login/signup)
-- [ ] 🗄️ Backend database integration (Supabase / Firebase / MongoDB)
-- [ ] 🤖 OpenAI-powered description generation via n8n AI node
-- [ ] 📧 Email reminders via n8n SMTP node
-- [ ] 📆 Google Calendar sync via n8n Google Calendar node
-- [ ] 📱 Progressive Web App (PWA) support
-- [ ] 🌍 Multi-language support (i18n)
-- [ ] 🧪 Unit and integration tests (Jest)
-- [ ] 🐳 Docker Compose setup for one-command local deployment
-- [ ] 📊 Productivity analytics dashboard
+- [ ] 🔐 User authentication + cloud sync (thinking Supabase)
+- [ ] 📧 Email/Slack reminders via n8n notification nodes
+- [ ] 📆 Google Calendar sync for due dates
+- [ ] 📊 Simple productivity stats (tasks completed per week, etc.)
+- [ ] 📱 PWA support — install it like an app
+- [ ] 🧪 Tests — there are none, which is fine until it isn't
+- [ ] 🐳 Docker Compose to spin up the whole stack in one command
 
 ---
 
-## 🤝 Contributing
+## 🙌 Acknowledgements
 
-Contributions, issues, and feature requests are welcome!
-
-1. **Fork** the repository
-2. Create a new branch:
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-3. Commit your changes:
-   ```bash
-   git commit -m "feat: add your feature description"
-   ```
-4. Push to the branch:
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-5. Open a **Pull Request**
-
-Please follow the [Conventional Commits](https://www.conventionalcommits.org/) standard for commit messages.
+- [n8n](https://n8n.io) — the automation backbone
+- [Groq](https://groq.com) — blazing fast inference
+- [Todoist](https://todoist.com) — the design inspiration
 
 ---
 
-## 📄 License
-
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
-
-```
-MIT License © 2025 [Your Name]
-```
-
----
-
-## 👤 Author
-
-**[Your Name]**
-
-> 🚀 Frontend Developer passionate about building practical tools that connect the web with automation.
-
-[![Portfolio](https://img.shields.io/badge/Portfolio-yourwebsite.com-blue?style=for-the-badge&logo=google-chrome)](https://yourwebsite.com)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/yourprofile)
-[![GitHub](https://img.shields.io/badge/GitHub-Follow-black?style=for-the-badge&logo=github)](https://github.com/your-username)
-[![Email](https://img.shields.io/badge/Email-Contact%20Me-red?style=for-the-badge&logo=gmail)](mailto:your@email.com)
-
----
-
-## ⭐ Show Your Support
-
-If you found this project helpful or interesting, please consider giving it a **⭐ star** on GitHub — it helps others discover the project and motivates continued development!
-
----
-
-> *Built with ❤️ using HTML, CSS, JavaScript, and the power of n8n workflow automation.*
+> *Built with ❤️, localStorage, and way too many `document.getElementById` calls.*
