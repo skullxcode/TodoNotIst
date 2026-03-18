@@ -1,0 +1,172 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "categorize-task",
+        "responseMode": "responseNode",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        976,
+        304
+      ],
+      "id": "4ec24d49-56ba-41e6-8865-7fb3dabcbc6b",
+      "name": "Webhook (POST)",
+      "webhookId": "000d7aec-653c-43c0-8c5d-a3db48d2f8a0"
+    },
+    {
+      "parameters": {
+        "httpMethod": "OPTIONS",
+        "path": "categorize-task",
+        "responseMode": "responseNode",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "POST, OPTIONS"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        976,
+        528
+      ],
+      "id": "92ac9e45-83ac-4175-9862-04f5182b5b73",
+      "name": "Webhook (OPTIONS)",
+      "webhookId": "000d7aec-653c-43c0-8c5d-a3db48d2f8a0"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a smart assistant for a task management app.\n\nAnalyze the task below and return ALL of the following in strict JSON.\n\nAvailable Projects (IDs and Titles):\n{{ $json.body.availableProjects }}\n\nTask: {{ $json.body.task }}\n\nRules:\n- projectId: Pick the most relevant project ID from the list above. Default to \"inbox\" if none fit.\n- priority: p1 (urgent/critical), p2 (important), p3 (nice to have), p4 (no priority).\n- description: A concise 1-2 sentence description expanding on the task. Be specific and helpful.\n- labels: An array of 1-3 short relevant label strings (e.g. [\"work\", \"meeting\"]). Empty array if none apply.\n- subtasks: An array of 3-5 concrete, actionable subtask strings that break down the task. Each should be a short imperative sentence.\n\nRespond ONLY with this exact JSON shape, no markdown, no backticks, no extra text:\n{\"projectId\": \"string\", \"priority\": \"string\", \"description\": \"string\", \"labels\": [\"string\"], \"subtasks\": [\"string\"]}",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        1200,
+        304
+      ],
+      "id": "f66579de-9f07-4eae-8939-d432420dd28f",
+      "name": "AI Logic"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-120b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        528
+      ],
+      "id": "b273b1cb-018e-499a-92f7-fe6d9e4bf4be",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "lItGc7N0gJRl2nIg",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ typeof $json.text === 'string' ? JSON.parse($json.text.replace(/```json|```/g, '').trim()) : $json.text }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1488,
+        304
+      ],
+      "id": "e8371442-1a85-4ad7-a2d5-05921d41f416",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "connections": {
+    "Webhook (POST)": {
+      "main": [
+        [
+          {
+            "node": "AI Logic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook (OPTIONS)": {
+      "main": [
+        []
+      ]
+    },
+    "AI Logic": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Logic",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e72b6487cac77813878484345d18517f58d3a1ebf8401e7a834f0ce02076b709"
+  }
+}
