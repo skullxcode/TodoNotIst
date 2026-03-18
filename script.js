@@ -791,7 +791,7 @@ newLabelInputBox.addEventListener('keydown', (e) => {
 
 
 // ---------- N8N SMART CATEGORIZATION ---------- //
-const N8N_WEBHOOK_URL = "https://lafayette-andrea-tiger-armstrong.trycloudflare.com/webhook/categorize-task";
+const N8N_WEBHOOK_URL = "https://creation-representations-summary-trigger.trycloudflare.com/webhook/categorize-task";
 
 let showAutoFillToast = (message, isError = false) => {
     let existing = document.getElementById("autofill-toast");
